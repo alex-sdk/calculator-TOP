@@ -1,0 +1,55 @@
+html{
+    background-color: black;
+    text-align: center;
+}
+h1{
+    color: red;
+    font-family: 'Bungee Shade', cursive, sans-serif;
+    text-align: center;
+    margin: 3em;
+}
+footer{
+    text-align: center;
+    margin: 4em;
+}
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    padding: 10px;
+    display: grid;
+    border: 10px solid red;
+    width: 400px;
+    height: 500px;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: min-content(100px, auto) repeat(5, 80px);
+    gap: 2px
+}
+#display{
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    background-color: gray;
+    padding: 10px;
+    font-size: 48px;
+}
+button{
+    margin: 3px;
+    border-radius: 5%;
+    border: none;
+    font-weight: initial;
+    color: black;
+}
+#zero{
+    grid-column: span 2;
+}
+button:hover{
+    background-color: red;
+}
+button:active{
+    background-color: green;
+}
