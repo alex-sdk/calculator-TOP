@@ -1,63 +1,101 @@
-function add(a, b) {
-    return a + b;
-}
-function substract(a, b) {
-    return a - b;
-}
-function divide(a, b) {
-    return a / b;
-}
-function multiply(a, b) {
-    return a * b;
-}
+let displayValue = '0';
+let firstOperand = null;
+let secondOperand = null;
+let firstOperator = null;
+let secondOperator = null;
+let result = null;
+const buttons = document.querySelectorAll('button');
+
 function operate(operator, a, b) {
     if (operator == "+"){
-       return add(a, b)
+        return a + b;
     } else if (operator == "-") {
-        return substract(a, b)
+        return a - b;
     } else if (operator == "/") {
-        return divide(a, b)
+        return a / b;
     } else if (operator == "*") {
-        return multiply(a, b)
+        return a * b;
     }
 }
-
-function display(){
-    const display = document.querySelector("#display");
-    const operands = document.querySelectorAll(".operand");
-    const clear = document.querySelector(".clear");
-    const decimal = document.querySelector(".decimal");
-
-    clear.addEventListener('click', () => {
-        displayArr = [];
-        displayString = "";
-        display.innerText = '0';
-        decimal.disabled = false;
-    });
-
-    let displayArr = [];
-    display.innerText = '0';
-
-    operands.forEach((operand) => {
-        operand.addEventListener('click', function appendDisplay(){
-            displayArr.push(operand.value);
-
-            let displayString = displayArr.toString().replace(/,/g, '');
-            
-            if (displayString.length > 15) {
-                operands.forEach((operand) => {
-                    operand.disabled = true; 
-                });
-            }
-            if (displayString[0] == '.') {
-                displayString = '0' + displayString;
-            }
-            if (displayString.includes(".")) {
-                decimal.disabled = true;
-            }
-
-            display.innerText = displayString;
-        });
-    });
+function updateDisplay() {
+    const display = document.getElementById('display');
+    display.innerText = displayValue;
+    if (displayValue.length > 15) {
+        display.innerText = displayValue.substring(0, 15);
+    }
 }
-display()
+function clickButton() {
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function () {
+            if (buttons[i].classList.contains('operand')) {
+                inputOperand(buttons[i].value);
+                updateDisplay();
+            } else if (buttons[i].classList.contains('operator')) {
+                inputOperator(buttons[i].value);
+            } else if (buttons[i].classList.contains('equals')) {
+                inputEquals();
+                updateDisplay();
+            } else if (buttons[i].classList.contains('decimal')) {
+                inputDecimal(buttons[i].value);
+                updateDisplay();
+            } else if (buttons[i].classList.contains('percent')) {
+                inputPercent(displayValue);
+                updateDisplay();
+            } else if (buttons[i].classList.contains('sign')) {
+                inputSign(displayValue);
+                updateDisplay();
+            } else if (buttons[i].classList.contains('clear'))
+                clearDisplay();
+                updateDisplay();
+        }
+        )
+    }
+}
+function clearDisplay(){
+    displayValue = '0';
+    firstOperand = null;
+    secondOperand = null;
+    firstOperator = null;
+    secondOperator = null;
+    result = null;
+}
+function inputSign(num){
+    displayValue = (num * -1).toString();
+}
+function inputDecimal(dot){
+    if (displayValue === firstOperand || displayValue === secondOperand) {
+        displayValue = '0';
+        displayValue += dot;
+    } else if (!displayValue.includes(dot)) {
+        displayValue += dot;
+    } 
+}
+function inputPercent(num){
+    displayValue = (num / 100).toString();
+}
+function inputEquals(){
+    
+}
+function inputOperand(operand){
+    if(firstOperator === null) {
+        if(displayValue === '0' || displayValue === 0) {
+            displayValue = operand;
+        } else if (displayValue === firstOperand) {
+            displayValue = operand;
+        } else {
+            displayValue += operand;
+        }
+    } else {
+        if (displayValue === firstOperand) {
+            displayValue = operand;
+        } else {
+            displayValue += operand;
+        }
+    }
+}
+function inputOperator(){
+
+}
+
+updateDisplay()
+clickButton()
