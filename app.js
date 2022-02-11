@@ -2,7 +2,6 @@ let displayValue = '0';
 let firstOperand = null;
 let secondOperand = null;
 let firstOperator = null;
-let secondOperator = null;
 let result = null;
 const buttons = document.querySelectorAll('button');
 
@@ -56,7 +55,6 @@ function clearDisplay(){
     firstOperand = null;
     secondOperand = null;
     firstOperator = null;
-    secondOperator = null;
     result = null;
 }
 function inputSign(num){
@@ -73,8 +71,24 @@ function inputDecimal(dot){
 function inputPercent(num){
     displayValue = (num / 100).toString();
 }
-function inputEquals(){
-    
+function inputEquals() {
+    if (firstOperand === null) {
+        return;
+    }
+    secondOperand = displayValue;
+
+    result = operate(firstOperator, Number(firstOperand), Number(secondOperand));
+    if (Number.isNaN(result)) {
+        return displayValue = "lmao nope";
+    }
+    displayValue = result.toString();
+    firstOperand = result;
+    result = null;
+    secondOperand = null;
+}
+function inputOperator(operator) { 
+        firstOperator = operator;
+        firstOperand = displayValue;
 }
 function inputOperand(operand){
     if(firstOperator === null) {
@@ -93,9 +107,5 @@ function inputOperand(operand){
         }
     }
 }
-function inputOperator(){
-
-}
-
 updateDisplay()
 clickButton()
